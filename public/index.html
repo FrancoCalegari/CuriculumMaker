@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Crea tu curriculum vitae profesional de forma fácil y rápida"
+		/>
+		<meta name="theme-color" content="#2563eb" />
+		<title>Curriculum Maker - Crea tu CV Profesional</title>
+
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Icons -->
+		<link rel="icon" type="image/png" href="/icons/icon-192x192.png" />
+		<link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<style>
+			:root {
+				--primary-color: #2563eb;
+				--primary-dark: #1e40af;
+				--primary-light: #3b82f6;
+				--secondary-color: #8b5cf6;
+				--accent-color: #ec4899;
+
+				--bg-gradient-start: #0f172a;
+				--bg-gradient-end: #1e293b;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family:
+					"Inter",
+					-apple-system,
+					BlinkMacSystemFont,
+					"Segoe UI",
+					sans-serif;
+				background: linear-gradient(
+					135deg,
+					var(--bg-gradient-start) 0%,
+					var(--bg-gradient-end) 100%
+				);
+				background-attachment: fixed;
+				color: white;
+				line-height: 1.6;
+				min-height: 100vh;
+				overflow-x: hidden;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+
+			/* Hero Section */
+			.hero {
+				text-align: center;
+				padding: 100px 20px 80px;
+				position: relative;
+			}
+
+			.hero-icon {
+				font-size: 5rem;
+				margin-bottom: 20px;
+				display: inline-block;
+				animation: float 3s ease-in-out infinite;
+				filter: drop-shadow(0 10px 30px rgba(37, 99, 235, 0.5));
+			}
+
+			@keyframes float {
+				0%,
+				100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-20px);
+				}
+			}
+
+			.hero h1 {
+				font-size: 3.5rem;
+				font-weight: 800;
+				background: linear-gradient(
+					135deg,
+					#fff 0%,
+					var(--primary-light) 50%,
+					var(--secondary-color) 100%
+				);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				margin-bottom: 20px;
+				animation: fadeInDown 0.8s ease;
+			}
+
+			.hero p {
+				font-size: 1.3rem;
+				color: #cbd5e1;
+				margin-bottom: 40px;
+				max-width: 700px;
+				margin-left: auto;
+				margin-right: auto;
+				animation: fadeInUp 0.8s ease 0.2s both;
+			}
+
+			.cta-button {
+				display: inline-block;
+				padding: 18px 40px;
+				background: linear-gradient(
+					135deg,
+					var(--primary-color),
+					var(--primary-light)
+				);
+				color: white;
+				text-decoration: none;
+				border-radius: 12px;
+				font-size: 1.2rem;
+				font-weight: 600;
+				transition: all 0.3s ease;
+				box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+				animation: fadeInUp 0.8s ease 0.4s both;
+			}
+
+			.cta-button:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 15px 40px rgba(37, 99, 235, 0.6);
+			}
+
+			/* Features Section */
+			.features {
+				padding: 60px 20px;
+				animation: fadeInUp 0.8s ease 0.6s both;
+			}
+
+			.features h2 {
+				text-align: center;
+				font-size: 2.5rem;
+				margin-bottom: 50px;
+				background: linear-gradient(135deg, #fff, var(--primary-light));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+
+			.features-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 30px;
+				max-width: 1000px;
+				margin: 0 auto;
+			}
+
+			.feature-card {
+				background: rgba(255, 255, 255, 0.05);
+				backdrop-filter: blur(20px);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 16px;
+				padding: 30px;
+				transition: all 0.3s ease;
+			}
+
+			.feature-card:hover {
+				transform: translateY(-5px);
+				background: rgba(255, 255, 255, 0.08);
+				border-color: rgba(37, 99, 235, 0.3);
+				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+			}
+
+			.feature-icon {
+				font-size: 3rem;
+				margin-bottom: 15px;
+				display: inline-block;
+			}
+
+			.feature-card h3 {
+				font-size: 1.3rem;
+				margin-bottom: 10px;
+				color: #fff;
+			}
+
+			.feature-card p {
+				color: #cbd5e1;
+				font-size: 0.95rem;
+				line-height: 1.6;
+			}
+
+			/* Footer */
+			.footer {
+				text-align: center;
+				padding: 40px 20px;
+				color: #94a3b8;
+				font-size: 0.9rem;
+				border-top: 1px solid rgba(255, 255, 255, 0.1);
+				margin-top: 60px;
+			}
+
+			/* Animations */
+			@keyframes fadeInDown {
+				from {
+					opacity: 0;
+					transform: translateY(-30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.hero h1 {
+					font-size: 2.5rem;
+				}
+
+				.hero p {
+					font-size: 1.1rem;
+				}
+
+				.hero-icon {
+					font-size: 4rem;
+				}
+
+				.features h2 {
+					font-size: 2rem;
+				}
+			}
+
+			/* Scroll hint */
+			.scroll-hint {
+				position: absolute;
+				bottom: 20px;
+				left: 50%;
+				transform: translateX(-50%);
+				animation: bounce 2s infinite;
+				color: #64748b;
+				font-size: 2rem;
+			}
+
+			@keyframes bounce {
+				0%,
+				20%,
+				50%,
+				80%,
+				100% {
+					transform: translateX(-50%) translateY(0);
+				}
+				40% {
+					transform: translateX(-50%) translateY(-10px);
+				}
+				60% {
+					transform: translateX(-50%) translateY(-5px);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<!-- Hero Section -->
+			<section class="hero">
+				<div class="hero-icon">📄</div>
+				<h1>Curriculum Maker</h1>
+				<p>
+					Crea tu curriculum vitae profesional en minutos. Exporta en PDF,
+					guarda tus datos y edita cuando quieras.
+				</p>
+				<a href="/tool.html" class="cta-button"> Crear mi CV ahora </a>
+				<div class="scroll-hint">↓</div>
+			</section>
+
+			<!-- Features Section -->
+			<section class="features">
+				<h2>¿Por qué usar Curriculum Maker?</h2>
+				<div class="features-grid">
+					<div class="feature-card">
+						<div class="feature-icon">📝</div>
+						<h3>Fácil de Usar</h3>
+						<p>
+							Interfaz intuitiva y simple. Completa el formulario y obtén tu CV
+							profesional al instante.
+						</p>
+					</div>
+
+					<div class="feature-card">
+						<div class="feature-icon">📄</div>
+						<h3>Exporta a PDF</h3>
+						<p>
+							Descarga tu curriculum en formato PDF con diseño profesional listo
+							para enviar.
+						</p>
+					</div>
+
+					<div class="feature-card">
+						<div class="feature-icon">💾</div>
+						<h3>Guarda y Edita</h3>
+						<p>
+							Exporta tus datos en JSON para editar tu CV en el futuro sin
+							perder información.
+						</p>
+					</div>
+
+					<div class="feature-card">
+						<div class="feature-icon">👁️</div>
+						<h3>Vista Previa en Tiempo Real</h3>
+						<p>
+							Ve cómo queda tu CV mientras lo editas con nuestra vista previa
+							instantánea.
+						</p>
+					</div>
+
+					<div class="feature-card">
+						<div class="feature-icon">📱</div>
+						<h3>Funciona Offline</h3>
+						<p>
+							Progressive Web App que funciona sin conexión después de la
+							primera visita.
+						</p>
+					</div>
+
+					<div class="feature-card">
+						<div class="feature-icon">🎨</div>
+						<h3>Diseño Moderno</h3>
+						<p>
+							CV con diseño profesional y limpio que impresionará a los
+							empleadores.
+						</p>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Footer -->
+		<footer class="footer">
+			<p>© 2026 Curriculum Maker - Tu CV profesional en minutos</p>
+		</footer>
+
+		<script>
+			// Register service worker
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker
+					.register("/sw.js")
+					.then((reg) => console.log("Service Worker registered", reg))
+					.catch((err) =>
+						console.error("Service Worker registration failed", err),
+					);
+			}
+		</script>
+	</body>
+</html>

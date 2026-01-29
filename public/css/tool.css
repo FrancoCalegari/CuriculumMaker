@@ -1,0 +1,585 @@
+/* Tool Page Specific Styles */
+
+/* Tool Container - Split View */
+.tool-container {
+	display: grid;
+	grid-template-columns: 45% 55%;
+	min-height: 100vh;
+	gap: 0;
+	background: linear-gradient(
+		135deg,
+		var(--bg-gradient-start) 0%,
+		var(--bg-gradient-end) 100%
+	);
+}
+
+/* Form Panel (Left) */
+.form-panel {
+	background: transparent;
+	overflow-y: auto;
+	padding: 20px;
+	max-height: 100vh;
+}
+.form-header {
+	margin-bottom: 30px;
+	position: block;
+	width: 44%;
+	top: -1rem;
+	background: linear-gradient(
+		180deg,
+		var(--bg-gradient-start) 0%,
+		var(--bg-gradient-start) 70%,
+		transparent 100%
+	);
+	padding: 20px 0;
+	z-index: 10;
+}
+
+.back-link {
+	display: inline-block;
+	color: #94a3b8;
+	text-decoration: none;
+	font-size: 0.9rem;
+	margin-bottom: 15px;
+	transition: color 0.3s ease;
+}
+
+.back-link:hover {
+	color: var(--primary-light);
+}
+
+.tool-title {
+	font-size: 2rem;
+	font-weight: 700;
+	background: linear-gradient(
+		135deg,
+		var(--primary-color),
+		var(--secondary-color)
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.tool-title .icon {
+	font-size: 2rem;
+}
+
+.cv-form {
+	background: transparent;
+	padding: 0;
+	box-shadow: none;
+}
+
+.cv-form .form-section {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(20px);
+	border-radius: var(--border-radius);
+	padding: 25px;
+	margin-bottom: 20px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Preview Panel (Right) */
+.preview-panel {
+	background: #f8fafc;
+	border-left: 1px solid rgba(255, 255, 255, 0.1);
+	overflow-y: auto;
+	padding: 20px;
+	max-height: 100vh;
+	position: sticky;
+	top: 0;
+}
+
+.preview-header {
+	background: linear-gradient(
+		135deg,
+		var(--primary-color),
+		var(--secondary-color)
+	);
+	color: white;
+	padding: 15px 20px;
+	border-radius: 12px;
+	margin-bottom: 20px;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.preview-header h2 {
+	margin: 0;
+	font-size: 1.3rem;
+	font-weight: 600;
+}
+
+/* CV Preview Styles */
+.cv-preview {
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+	min-height: 600px;
+	padding: 40px;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+/* Placeholder */
+.preview-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 500px;
+	color: #94a3b8;
+	text-align: center;
+}
+
+.placeholder-icon {
+	font-size: 4rem;
+	margin-bottom: 20px;
+	opacity: 0.5;
+}
+
+.preview-placeholder p {
+	margin: 5px 0;
+	font-size: 1.1rem;
+}
+
+.placeholder-hint {
+	font-size: 0.9rem !important;
+	color: #cbd5e1;
+}
+
+/* CV Preview Content Styles (matching PDF) */
+.cv-preview.has-content .preview-placeholder {
+	display: none;
+}
+
+.cv-header {
+	text-align: center;
+	margin-bottom: 30px;
+	padding-bottom: 20px;
+	border-bottom: 3px solid #2563eb;
+}
+
+.cv-header h1 {
+	font-size: 32px;
+	color: #1e40af;
+	margin-bottom: 10px;
+}
+
+.cv-contact-info {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 15px;
+	font-size: 14px;
+	color: #666;
+}
+
+.cv-contact-info span {
+	display: inline-flex;
+	align-items: center;
+}
+
+.cv-profile-summary {
+	background: #f0f9ff;
+	padding: 15px;
+	border-radius: 8px;
+	margin-bottom: 25px;
+	border-left: 4px solid #2563eb;
+}
+
+.cv-section {
+	margin-bottom: 25px;
+}
+
+.cv-section-title {
+	font-size: 20px;
+	color: #1e40af;
+	margin-bottom: 15px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #dbeafe;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.cv-entry {
+	margin-bottom: 20px;
+	padding-left: 15px;
+	border-left: 2px solid #e0e7ff;
+}
+
+.cv-entry-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 8px;
+}
+
+.cv-entry-title {
+	font-size: 16px;
+	font-weight: bold;
+	color: #1e40af;
+}
+
+.cv-entry-subtitle {
+	font-size: 14px;
+	color: #4b5563;
+	margin-bottom: 5px;
+}
+
+.cv-entry-date {
+	font-size: 12px;
+	color: #6b7280;
+	font-style: italic;
+}
+
+.cv-entry-description {
+	font-size: 14px;
+	color: #4b5563;
+	margin-top: 8px;
+}
+
+.cv-skills-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px;
+}
+
+.cv-skill-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+	background: #f8fafc;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+.cv-skill-name {
+	font-weight: 500;
+	color: #334155;
+}
+
+.cv-skill-level {
+	color: #64748b;
+	font-size: 12px;
+}
+
+.cv-languages-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.cv-language-item {
+	padding: 8px 15px;
+	background: #f0f9ff;
+	border-radius: 20px;
+	font-size: 14px;
+	color: #1e40af;
+	border: 1px solid #bfdbfe;
+}
+
+/* Photo Upload Section */
+.photo-section {
+	border-top: 2px solid #e2e8f0;
+	padding-top: 20px;
+	margin-top: 15px;
+}
+
+.photo-upload-container {
+	display: flex;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+.photo-preview-container {
+	position: relative;
+}
+
+.photo-upload-btn {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 150px;
+	height: 150px;
+	border: 2px dashed #cbd5e1;
+	border-radius: 12px;
+	background: #f8fafc;
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.photo-upload-btn:hover {
+	border-color: var(--primary-color);
+	background: #f0f9ff;
+}
+
+.upload-icon {
+	font-size: 2rem;
+	color: #94a3b8;
+	margin-bottom: 8px;
+}
+
+.photo-upload-btn span:last-child {
+	font-size: 0.9rem;
+	color: #64748b;
+}
+
+.photo-preview {
+	position: relative;
+	width: 150px;
+	height: 150px;
+}
+
+.photo-preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%; /* Default circular */
+}
+
+.photo-remove {
+	position: absolute;
+	top: -8px;
+	right: -8px;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: var(--danger-color);
+	color: white;
+	border: 2px solid white;
+	font-size: 1.2rem;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: var(--transition);
+	line-height: 1;
+	padding: 0;
+}
+
+.photo-remove:hover {
+	background: #dc2626;
+	transform: rotate(90deg);
+}
+
+.photo-controls {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.control-group {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.control-group label {
+	font-size: 0.85rem;
+	font-weight: 500;
+	color: var(--text-dark);
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.control-group select,
+.control-group input[type="color"] {
+	padding: 8px;
+	border: 2px solid #e2e8f0;
+	border-radius: 6px;
+	font-size: 0.9rem;
+	transition: var(--transition);
+}
+
+.control-group select:focus,
+.control-group input[type="color"]:focus {
+	outline: none;
+	border-color: var(--primary-color);
+}
+
+.control-group input[type="range"] {
+	width: 100%;
+	height: 6px;
+	border-radius: 3px;
+	background: #e2e8f0;
+	outline: none;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--primary-color);
+	cursor: pointer;
+	transition: var(--transition);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.2);
+	background: var(--primary-dark);
+}
+
+.control-group input[type="range"]::-moz-range-thumb {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: var(--primary-color);
+	cursor: pointer;
+	border: none;
+	transition: var(--transition);
+}
+
+.control-group input[type="range"]::-moz-range-thumb:hover {
+	transform: scale(1.2);
+	background: var(--primary-dark);
+}
+
+.control-group input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+
+.control-group input[type="color"] {
+	width: 60px;
+	height: 40px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+/* CV Photo Styles in Preview */
+.cv-photo-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.cv-photo {
+	width: 120px;
+	height: 120px;
+	object-fit: cover;
+}
+
+.cv-photo.circular {
+	border-radius: 50%;
+}
+
+.cv-photo.rounded {
+	border-radius: 16px;
+}
+
+.cv-photo.square {
+	border-radius: 0;
+}
+
+/* Accent Color Picker */
+.color-picker-container {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.color-picker-container input[type="color"] {
+	width: 80px;
+	height: 40px;
+	border: 2px solid #e2e8f0;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 4px;
+}
+
+.color-preview {
+	font-family: monospace;
+	font-size: 0.9rem;
+	color: var(--text-dark);
+	font-weight: 500;
+	padding: 8px 12px;
+	background: #f8fafc;
+	border-radius: 6px;
+	border: 1px solid #e2e8f0;
+}
+
+.helper-text {
+	display: block;
+	margin-top: 6px;
+	font-size: 0.8rem;
+	color: #64748b;
+	font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+	.tool-container {
+		grid-template-columns: 1fr;
+	}
+
+	.preview-panel {
+		position: relative;
+		min-height: 600px;
+		border-left: none;
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.form-panel {
+		max-height: none;
+	}
+}
+
+@media (max-width: 768px) {
+	.cv-preview {
+		padding: 20px;
+	}
+
+	.cv-skills-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.tool-title {
+		font-size: 1.5rem;
+	}
+}
+
+/* Actions in form panel */
+.cv-form .actions {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(20px);
+	border-radius: var(--border-radius);
+	padding: 20px;
+	margin-top: 20px;
+	box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Scrollbar for panels */
+.form-panel::-webkit-scrollbar,
+.preview-panel::-webkit-scrollbar {
+	width: 8px;
+}
+
+.form-panel::-webkit-scrollbar-track {
+	background: rgba(30, 41, 59, 0.3);
+}
+
+.form-panel::-webkit-scrollbar-thumb {
+	background: var(--primary-color);
+	border-radius: 4px;
+}
+
+.preview-panel::-webkit-scrollbar-track {
+	background: #e2e8f0;
+}
+
+.preview-panel::-webkit-scrollbar-thumb {
+	background: #94a3b8;
+	border-radius: 4px;
+}

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Crea tu curriculum vitae profesional y descárgalo en PDF"
+		/>
+		<meta name="theme-color" content="#2563eb" />
+		<title>Curriculum Maker - Crea tu CV</title>
+
+		<!-- PWA Manifest -->
+		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Icons -->
+		<link rel="icon" type="image/png" href="/icons/icon-192x192.png" />
+		<link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Styles -->
+		<link rel="stylesheet" href="/css/styles.css" />
+		<link rel="stylesheet" href="/css/tool.css" />
+	</head>
+	<body>
+		<div class="tool-container">
+			<!-- Left Panel - Form -->
+			<div class="form-panel">
+				<div class="form-header">
+					<a href="/" class="back-link">← Volver</a>
+					<h1 class="tool-title">
+						<span class="icon">📄</span>
+						Crear Curriculum
+					</h1>
+				</div>
+				<form id="cvForm" class="cv-form">
+					<!-- Personal Information -->
+					<section class="form-section">
+						<h2 class="section-title">
+							<span class="icon">👤</span>
+							Información Personal
+						</h2>
+						<div class="form-grid">
+							<div class="form-group full-width">
+								<label for="name">Nombre Completo *</label>
+								<input
+									type="text"
+									id="name"
+									required
+									placeholder="Juan Pérez"
+								/>
+							</div>
+							<div class="form-group">
+								<label for="email">Email *</label>
+								<input
+									type="email"
+									id="email"
+									required
+									placeholder="juan@ejemplo.com"
+								/>
+							</div>
+							<div class="form-group">
+								<label for="phone">Teléfono</label>
+								<input type="tel" id="phone" placeholder="+54 9 11 1234-5678" />
+							</div>
+							<div class="form-group full-width">
+								<label for="address">Dirección</label>
+								<input
+									type="text"
+									id="address"
+									placeholder="Buenos Aires, Argentina"
+								/>
+							</div>
+							<div class="form-group full-width">
+								<label for="summary">Resumen Profesional</label>
+								<textarea
+									id="summary"
+									rows="4"
+									placeholder="Breve descripción sobre ti y tus objetivos profesionales..."
+								></textarea>
+							</div>
+
+							<!-- Photo Upload Section -->
+							<div class="form-group full-width photo-section">
+								<label>📷 Foto de Perfil</label>
+								<div class="photo-upload-container">
+									<div class="photo-preview-container">
+										<div
+											id="photoPreview"
+											class="photo-preview"
+											style="display: none"
+										>
+											<img id="photoImg" src="" alt="Preview" />
+											<button
+												type="button"
+												class="photo-remove"
+												onclick="removePhoto()"
+												title="Eliminar foto"
+											>
+												×
+											</button>
+										</div>
+										<label
+											for="photoInput"
+											class="photo-upload-btn"
+											id="photoUploadBtn"
+										>
+											<span class="upload-icon">+</span>
+											<span>Subir Foto</span>
+										</label>
+										<input
+											type="file"
+											id="photoInput"
+											accept="image/*"
+											style="display: none"
+											onchange="handlePhotoUpload(event)"
+										/>
+									</div>
+
+									<div class="photo-controls">
+										<div class="control-group">
+											<label for="photoShape">Forma</label>
+											<select id="photoShape" onchange="updatePhotoStyle()">
+												<option value="circular">Circular</option>
+												<option value="rounded">Redondeada</option>
+												<option value="square">Cuadrada</option>
+											</select>
+										</div>
+
+										<div class="control-group">
+											<label>
+												<input
+													type="checkbox"
+													id="photoBorderToggle"
+													onchange="updatePhotoStyle()"
+												/>
+												Borde
+											</label>
+										</div>
+
+										<div
+											class="control-group"
+											id="borderControls"
+											style="display: none"
+										>
+											<label for="borderWidth"
+												>Grosor: <span id="borderWidthValue">3</span>px</label
+											>
+											<input
+												type="range"
+												id="borderWidth"
+												min="1"
+												max="10"
+												value="3"
+												oninput="updateBorderWidth(this.value)"
+											/>
+										</div>
+
+										<div
+											class="control-group"
+											id="borderColorControl"
+											style="display: none"
+										>
+											<label for="borderColor">Color</label>
+											<input
+												type="color"
+												id="borderColor"
+												value="#2563eb"
+												onchange="updatePhotoStyle()"
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<!-- Accent Color Customization -->
+					<section class="form-section">
+						<h2 class="section-title">
+							<span class="icon">🎨</span>
+							Personalización
+						</h2>
+						<div class="form-grid">
+							<div class="form-group">
+								<label for="accentColor">Color de Acento</label>
+								<div class="color-picker-container">
+									<input
+										type="color"
+										id="accentColor"
+										value="#2563eb"
+										onchange="updateAccentColor(this.value)"
+									/>
+									<span class="color-preview" id="colorPreview">#2563eb</span>
+								</div>
+								<small class="helper-text"
+									>Este color se usará en títulos, bordes y elementos destacados
+									del CV</small
+								>
+							</div>
+						</div>
+					</section>
+
+					<!-- Work Experience -->
+					<section class="form-section">
+						<div class="section-header">
+							<h2 class="section-title">
+								<span class="icon">💼</span>
+								Experiencia Laboral
+							</h2>
+							<button
+								type="button"
+								class="btn-add"
+								onclick="addWorkExperience()"
+							>
+								<span>+</span> Agregar Experiencia
+							</button>
+						</div>
+						<div id="workExperienceContainer"></div>
+					</section>
+
+					<!-- Education -->
+					<section class="form-section">
+						<div class="section-header">
+							<h2 class="section-title">
+								<span class="icon">🎓</span>
+								Educación
+							</h2>
+							<button type="button" class="btn-add" onclick="addEducation()">
+								<span>+</span> Agregar Educación
+							</button>
+						</div>
+						<div id="educationContainer"></div>
+					</section>
+
+					<!-- Skills -->
+					<section class="form-section">
+						<div class="section-header">
+							<h2 class="section-title">
+								<span class="icon">⚡</span>
+								Habilidades
+							</h2>
+							<button type="button" class="btn-add" onclick="addSkill()">
+								<span>+</span> Agregar Habilidad
+							</button>
+						</div>
+						<div id="skillsContainer"></div>
+					</section>
+
+					<!-- Languages -->
+					<section class="form-section">
+						<div class="section-header">
+							<h2 class="section-title">
+								<span class="icon">🌍</span>
+								Idiomas
+							</h2>
+							<button type="button" class="btn-add" onclick="addLanguage()">
+								<span>+</span> Agregar Idioma
+							</button>
+						</div>
+						<div id="languagesContainer"></div>
+					</section>
+
+					<!-- Action Buttons -->
+					<div class="actions">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							onclick="clearForm()"
+						>
+							<span class="icon">🗑️</span>
+							Limpiar
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							onclick="exportData()"
+						>
+							<span class="icon">📥</span>
+							Exportar Datos
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary"
+							onclick="document.getElementById('importFile').click()"
+						>
+							<span class="icon">📤</span>
+							Importar Datos
+						</button>
+						<button type="submit" class="btn btn-primary">
+							<span class="icon">📄</span>
+							Generar PDF
+						</button>
+					</div>
+				</form>
+
+				<!-- Hidden file input for import -->
+				<input
+					type="file"
+					id="importFile"
+					accept=".json"
+					style="display: none"
+					onchange="importData(event)"
+				/>
+			</div>
+
+			<!-- Right Panel - Preview -->
+			<div class="preview-panel">
+				<div class="preview-header">
+					<h2>Vista Previa</h2>
+				</div>
+				<div id="cvPreview" class="cv-preview">
+					<div class="preview-placeholder">
+						<div class="placeholder-icon">👀</div>
+						<p>La vista previa de tu CV aparecerá aquí</p>
+						<p class="placeholder-hint">
+							Completa el formulario para ver tu CV
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Loading Overlay -->
+		<div id="loadingOverlay" class="loading-overlay">
+			<div class="spinner"></div>
+			<p>Generando tu CV...</p>
+		</div>
+
+		<!-- Toast Notification -->
+		<div id="toast" class="toast"></div>
+
+		<!-- Scripts -->
+		<script src="/js/app.js"></script>
+	</body>
+</html>
