@@ -1,8 +1,20 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const puppeteer = require("puppeteer");
 const path = require("path");
+
+// Puppeteer setup for different environments
+let puppeteer;
+let chromium;
+
+// Try to use Vercel-compatible version
+try {
+	puppeteer = require("puppeteer-core");
+	chromium = require("@sparticuz/chromium");
+} catch (err) {
+	// Fallback to regular puppeteer for local development
+	puppeteer = require("puppeteer");
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,11 +33,23 @@ app.post("/api/generate-pdf", async (req, res) => {
 		// Generate HTML from template
 		const htmlContent = generateCVHTML(cvData);
 
-		// Launch Puppeteer
-		const browser = await puppeteer.launch({
-			headless: "new",
-			args: ["--no-sandbox", "--disable-setuid-sandbox"],
-		});
+		// Launch Puppeteer with appropriate configuration
+		let browser;
+		if (chromium) {
+			// Vercel/serverless environment
+			browser = await puppeteer.launch({
+				args: chromium.args,
+				defaultViewport: chromium.defaultViewport,
+				executablePath: await chromium.executablePath(),
+				headless: chromium.headless,
+			});
+		} else {
+			// Local development
+			browser = await puppeteer.launch({
+				headless: "new",
+				args: ["--no-sandbox", "--disable-setuid-sandbox"],
+			});
+		}
 
 		const page = await browser.newPage();
 		await page.setContent(htmlContent, { waitUntil: "networkidle0" });

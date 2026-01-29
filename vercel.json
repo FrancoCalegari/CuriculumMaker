@@ -1,0 +1,54 @@
+{
+	"version": 2,
+	"builds": [
+		{
+			"src": "server.js",
+			"use": "@vercel/node",
+			"config": {
+				"maxLambdaSize": "50mb"
+			}
+		},
+		{
+			"src": "public/**",
+			"use": "@vercel/static"
+		}
+	],
+	"routes": [
+		{
+			"src": "/api/generate-pdf",
+			"dest": "/server.js"
+		},
+		{
+			"src": "/css/(.*)",
+			"dest": "/public/css/$1"
+		},
+		{
+			"src": "/js/(.*)",
+			"dest": "/public/js/$1"
+		},
+		{
+			"src": "/icons/(.*)",
+			"dest": "/public/icons/$1"
+		},
+		{
+			"src": "/manifest.json",
+			"dest": "/public/manifest.json"
+		},
+		{
+			"src": "/sw.js",
+			"dest": "/public/sw.js"
+		},
+		{
+			"src": "/tool.html",
+			"dest": "/public/tool.html"
+		},
+		{
+			"src": "/",
+			"dest": "/public/index.html"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "/public/$1"
+		}
+	]
+}
