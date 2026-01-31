@@ -433,28 +433,174 @@ async function generatePDF(e) {
 	document.getElementById("loadingOverlay").classList.add("active");
 
 	try {
-		const response = await fetch("/api/generate-pdf", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		});
+		// Get the accent color
+		const accentColor = cvData.accentColor || "#2563eb";
 
-		if (!response.ok) {
-			throw new Error("Error al generar PDF");
+		// Create a temporary container for PDF generation
+		const pdfElement = document.createElement("div");
+		pdfElement.style.width = "210mm"; // A4 width
+		pdfElement.style.padding = "20px";
+		pdfElement.style.backgroundColor = "white";
+		pdfElement.style.fontFamily =
+			"'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+		pdfElement.style.color = "#333";
+		pdfElement.style.lineHeight = "1.6";
+
+		// Generate photo HTML if exists
+		let photoHTML = "";
+		if (cvData.photo && cvData.photo.data) {
+			let borderRadius;
+			switch (cvData.photo.shape) {
+				case "circular":
+					borderRadius = "50%";
+					break;
+				case "rounded":
+					borderRadius = "16px";
+					break;
+				case "square":
+					borderRadius = "0";
+					break;
+				default:
+					borderRadius = "50%";
+			}
+			const border = cvData.photo.hasBorder
+				? `border: ${cvData.photo.borderWidth}px solid ${cvData.photo.borderColor};`
+				: "";
+
+			photoHTML = `
+				<div style="display: flex; justify-content: center; margin-bottom: 20px;">
+					<img src="${cvData.photo.data}" 
+						style="width: 120px; height: 120px; object-fit: cover; border-radius: ${borderRadius}; ${border}" 
+						alt="Foto de perfil" />
+				</div>
+			`;
 		}
 
-		// Download PDF
-		const blob = await response.blob();
-		const url = window.URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = `CV_${data.personalInfo.name.replace(/\s+/g, "_")}.pdf`;
-		document.body.appendChild(a);
-		a.click();
-		window.URL.revokeObjectURL(url);
-		document.body.removeChild(a);
+		// Build the PDF HTML content
+		pdfElement.innerHTML = `
+			${photoHTML}
+			
+			<div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid ${accentColor};">
+				<h1 style="font-size: 32px; color: ${accentColor}; margin-bottom: 10px;">${data.personalInfo.name}</h1>
+				<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; font-size: 14px; color: #666;">
+					${data.personalInfo.email ? `<span>📧 ${data.personalInfo.email}</span>` : ""}
+					${data.personalInfo.phone ? `<span>📱 ${data.personalInfo.phone}</span>` : ""}
+					${data.personalInfo.address ? `<span>📍 ${data.personalInfo.address}</span>` : ""}
+				</div>
+			</div>
+			
+			${
+				data.personalInfo.summary
+					? `
+				<div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid ${accentColor};">
+					<p>${data.personalInfo.summary}</p>
+				</div>
+			`
+					: ""
+			}
+			
+			${
+				data.workExperience && data.workExperience.length > 0
+					? `
+				<div style="margin-bottom: 25px;">
+					<h2 style="font-size: 20px; color: ${accentColor}; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid ${accentColor}; text-transform: uppercase; letter-spacing: 1px;">EXPERIENCIA LABORAL</h2>
+					${data.workExperience
+						.map(
+							(exp) => `
+						<div style="margin-bottom: 20px; padding-left: 15px; border-left: 2px solid #e0e7ff;">
+							<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+								<div style="font-size: 16px; font-weight: bold; color: ${accentColor};">${exp.position}</div>
+								<div style="font-size: 12px; color: #6b7280; font-style: italic;">${exp.startDate} - ${exp.endDate || "Presente"}</div>
+							</div>
+							<div style="font-size: 14px; color: #4b5563; margin-bottom: 5px;">${exp.company}</div>
+							${exp.description ? `<div style="font-size: 14px; color: #4b5563; margin-top: 8px;">${exp.description}</div>` : ""}
+						</div>
+					`,
+						)
+						.join("")}
+				</div>
+			`
+					: ""
+			}
+			
+			${
+				data.education && data.education.length > 0
+					? `
+				<div style="margin-bottom: 25px;">
+					<h2 style="font-size: 20px; color: ${accentColor}; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid ${accentColor}; text-transform: uppercase; letter-spacing: 1px;">EDUCACIÓN</h2>
+					${data.education
+						.map(
+							(edu) => `
+						<div style="margin-bottom: 20px; padding-left: 15px; border-left: 2px solid #e0e7ff;">
+							<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+								<div style="font-size: 16px; font-weight: bold; color: ${accentColor};">${edu.degree}</div>
+								<div style="font-size: 12px; color: #6b7280; font-style: italic;">${edu.startDate} - ${edu.endDate || "Presente"}</div>
+							</div>
+							<div style="font-size: 14px; color: #4b5563; margin-bottom: 5px;">${edu.institution}</div>
+							${edu.description ? `<div style="font-size: 14px; color: #4b5563; margin-top: 8px;">${edu.description}</div>` : ""}
+						</div>
+					`,
+						)
+						.join("")}
+				</div>
+			`
+					: ""
+			}
+			
+			${
+				data.skills && data.skills.length > 0
+					? `
+				<div style="margin-bottom: 25px;">
+					<h2 style="font-size: 20px; color: ${accentColor}; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid ${accentColor}; text-transform: uppercase; letter-spacing: 1px;">HABILIDADES</h2>
+					<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+						${data.skills
+							.map(
+								(skill) => `
+							<div style="display: flex; justify-content: space-between; padding: 8px; background: #f8fafc; border-radius: 5px; font-size: 14px;">
+								<span style="font-weight: 500; color: #334155;">${skill.name}</span>
+								<span style="color: #64748b; font-size: 12px;">${skill.level}</span>
+							</div>
+						`,
+							)
+							.join("")}
+					</div>
+				</div>
+			`
+					: ""
+			}
+			
+			${
+				data.languages && data.languages.length > 0
+					? `
+				<div style="margin-bottom: 25px;">
+					<h2 style="font-size: 20px; color: ${accentColor}; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid ${accentColor}; text-transform: uppercase; letter-spacing: 1px;">IDIOMAS</h2>
+					<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+						${data.languages
+							.map(
+								(lang) => `
+							<div style="padding: 8px 15px; background: #f0f9ff; border-radius: 20px; font-size: 14px; color: #1e40af; border: 1px solid #bfdbfe;">
+								${lang.name} - ${lang.level}
+							</div>
+						`,
+							)
+							.join("")}
+					</div>
+				</div>
+			`
+					: ""
+			}
+		`;
+
+		// Generate PDF using html2pdf.js
+		const opt = {
+			margin: 10,
+			filename: `CV_${data.personalInfo.name.replace(/\s+/g, "_")}.pdf`,
+			image: { type: "jpeg", quality: 0.98 },
+			html2canvas: { scale: 2, useCORS: true },
+			jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+		};
+
+		await html2pdf().set(opt).from(pdfElement).save();
 
 		showToast("¡PDF generado exitosamente!", "success");
 	} catch (error) {
