@@ -38,10 +38,19 @@ app.post("/api/generate-pdf", async (req, res) => {
 		if (chromium) {
 			// Vercel/serverless environment
 			browser = await puppeteer.launch({
-				args: chromium.args,
+				args: [
+					...chromium.args,
+					"--disable-gpu",
+					"--disable-dev-shm-usage",
+					"--disable-setuid-sandbox",
+					"--no-first-run",
+					"--no-sandbox",
+					"--no-zygote",
+					"--single-process",
+				],
 				defaultViewport: chromium.defaultViewport,
 				executablePath: await chromium.executablePath(),
-				headless: chromium.headless,
+				headless: chromium.headless || "new",
 				ignoreHTTPSErrors: true,
 			});
 		} else {
